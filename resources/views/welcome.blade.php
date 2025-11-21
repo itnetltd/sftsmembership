@@ -9,116 +9,128 @@
 
     {{-- Fonts & Assets --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Use SFTS logo as favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('brand/sfts-logo.png') }}">
     <meta name="theme-color" content="#0F172A"> {{-- dark/navy --}}
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased">
+<body class="bg-gradient-to-br from-slate-50 via-white to-slate-50 text-slate-900 antialiased">
 
     {{-- Top brand bar --}}
-    <header class="bg-slate-950 text-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <img src="{{ asset('brand/sfts-logo.png') }}" alt="Shoot For The Stars" class="h-10 w-auto rounded-full bg-slate-900">
+    <header class="bg-slate-950 text-white shadow-lg sticky top-0 z-50 backdrop-blur-sm bg-opacity-95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <a href="{{ url('/') }}" class="flex items-center gap-3 group">
+                <img src="{{ asset('brand/sfts-logo.png') }}" alt="Shoot For The Stars" class="h-12 w-12 rounded-full bg-slate-900 p-1 transition-transform group-hover:scale-105">
                 <div class="leading-tight hidden sm:block">
-                    <div class="font-semibold tracking-wide uppercase text-xs text-sky-300">
+                    <div class="font-bold tracking-wide uppercase text-xs text-yellow-400">
                         Shoot For The Stars
                     </div>
-                    <div class="text-sm opacity-95">
+                    <div class="text-sm opacity-90 font-medium">
                         Youth Basketball Membership Portal
                     </div>
                 </div>
             </a>
 
-            <nav class="flex items-center gap-4 text-sm">
+            <nav class="flex items-center gap-5 text-sm font-medium">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="hover:text-yellow-300 transition">Dashboard</a>
-                    <a href="{{ route('application.create') }}" class="hover:text-yellow-300 transition">
+                    <a href="{{ route('dashboard') }}" class="hover:text-yellow-400 transition-colors duration-200">Dashboard</a>
+                    <a href="{{ route('application.create') }}" class="hover:text-yellow-400 transition-colors duration-200">
                         My Player Profile
                     </a>
                     @if(auth()->user()->is_admin ?? false)
-                        <a href="{{ route('admin.apps.index') }}" class="hover:text-yellow-300 transition">
+                        <a href="{{ route('admin.apps.index') }}" class="hover:text-yellow-400 transition-colors duration-200">
                             Admin
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="hover:text-yellow-300 transition">Log in</a>
-                    <a href="{{ route('register') }}" class="hover:text-yellow-300 transition">Register</a>
+                    <a href="{{ route('login') }}" class="hover:text-yellow-400 transition-colors duration-200">Log in</a>
+                    <a href="{{ route('register') }}" class="px-4 py-2 bg-yellow-400 text-slate-950 rounded-lg font-semibold hover:bg-yellow-300 transition-all duration-200 shadow-md hover:shadow-lg">
+                        Register
+                    </a>
                 @endauth
             </nav>
         </div>
     </header>
 
     {{-- HERO --}}
-    <section class="relative">
-        <div class="absolute inset-0 -z-10 opacity-90"
+    <section class="relative overflow-hidden">
+        {{-- Enhanced gradient background --}}
+        <div class="absolute inset-0 -z-10"
              style="background:
-                radial-gradient(1100px 380px at 60% -10%, rgba(250,204,21,0.18), transparent),
-                radial-gradient(900px 320px at 15% 0%, rgba(56,189,248,0.14), transparent);">
+                radial-gradient(1200px 450px at 65% -5%, rgba(250,204,21,0.12), transparent),
+                radial-gradient(1000px 380px at 20% 5%, rgba(56,189,248,0.1), transparent),
+                radial-gradient(800px 300px at 80% 40%, rgba(16,185,129,0.08), transparent);">
         </div>
 
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid lg:grid-cols-12 gap-10 items-center">
-                <div class="lg:col-span-7">
-                    <h1 class="text-3xl sm:text-5xl font-semibold tracking-tight text-slate-900">
-                        Manage Your Child’s
-                        <span class="text-yellow-500">Basketball Membership</span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-tight">
+                        Manage Your Child's
+                        <span class="text-yellow-500 bg-gradient-to-r from-yellow-400 to-yellow-500 bg-clip-text text-transparent">Basketball Membership</span>
                         in One Place.
                     </h1>
-                    <p class="mt-5 text-slate-700 max-w-2xl">
+                    <p class="text-lg sm:text-xl text-slate-600 max-w-2xl leading-relaxed">
                         Shoot For The Stars Membership Portal helps parents register players, follow payments,
-                        choose age categories, and track their child’s progress in our youth basketball academy –
+                        choose age categories, and track their child's progress in our youth basketball academy –
                         from U8 to U16.
                     </p>
 
                     {{-- Primary CTA --}}
-                    <div class="mt-8">
+                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
                         <a href="{{ route('application.create') }}"
-                           class="inline-flex items-center px-6 py-3 rounded-lg text-slate-950 bg-yellow-400 hover:bg-yellow-300 shadow-soft font-medium">
+                           class="inline-flex items-center justify-center px-8 py-4 rounded-xl text-slate-950 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 shadow-lg hover:shadow-xl font-semibold text-base transition-all duration-300 transform hover:-translate-y-0.5">
                             Register a Player
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
                         </a>
                     </div>
 
                     {{-- Light secondary links --}}
                     @guest
-                        <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-600">
-                            <a href="{{ route('login') }}" class="underline hover:text-slate-900">Log in</a>
+                        <div class="flex flex-wrap items-center gap-3 text-sm text-slate-600 pt-2">
+                            <a href="{{ route('login') }}" class="font-medium underline decoration-2 underline-offset-4 hover:text-slate-900 transition-colors">Log in</a>
                             <span class="text-slate-400">•</span>
-                            <a href="{{ route('register') }}" class="underline hover:text-slate-900">Create parent account</a>
+                            <a href="{{ route('register') }}" class="font-medium underline decoration-2 underline-offset-4 hover:text-slate-900 transition-colors">Create parent account</a>
                         </div>
                     @endguest
                 </div>
 
-                {{-- Compact card (same structure, new content) --}}
+                {{-- Enhanced info card --}}
                 <div class="lg:col-span-5">
-                    <div class="bg-white rounded-xl shadow-soft p-6 border border-slate-100">
-                        <div class="flex items-center gap-3">
-                            <img src="{{ asset('brand/sfts-logo.png') }}" class="h-9 w-auto rounded-full bg-slate-900" alt="Shoot For The Stars">
-                            <div class="font-medium">
-                                Shoot For The Stars Basketball Academy
-                                <div class="text-xs text-slate-500">Youth Membership Portal</div>
+                    <div class="bg-white rounded-2xl shadow-xl p-8 border border-slate-200/60 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-6 pb-6 border-b border-slate-100">
+                            <img src="{{ asset('brand/sfts-logo.png') }}" class="h-12 w-12 rounded-full bg-slate-900 p-1.5" alt="Shoot For The Stars">
+                            <div>
+                                <div class="font-bold text-slate-900 text-base">
+                                    Shoot For The Stars Basketball Academy
+                                </div>
+                                <div class="text-xs text-slate-500 font-medium mt-0.5">Youth Membership Portal</div>
                             </div>
                         </div>
-                        <ul class="mt-5 space-y-2 text-slate-700 text-sm">
-                            <li class="flex items-center gap-2">
-                                <span class="h-2 w-2 bg-yellow-400 rounded-full"></span>
-                                Player categories: U8, U10, U12, U14, U16.
+                        <ul class="space-y-4 text-slate-700 mb-6">
+                            <li class="flex items-start gap-3">
+                                <span class="h-2.5 w-2.5 rounded-full bg-yellow-400 mt-2 flex-shrink-0 shadow-sm"></span>
+                                <span class="text-sm leading-relaxed"><strong class="text-slate-900">Player categories:</strong> U8, U10, U12, U14, U16.</span>
                             </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-2 w-2 bg-sky-400 rounded-full"></span>
-                                Programs: Practice only, Full Program + Game Day, Shooting Clinics.
+                            <li class="flex items-start gap-3">
+                                <span class="h-2.5 w-2.5 rounded-full bg-sky-400 mt-2 flex-shrink-0 shadow-sm"></span>
+                                <span class="text-sm leading-relaxed"><strong class="text-slate-900">Programs:</strong> Practice only, Full Program + Game Day, Shooting Clinics.</span>
                             </li>
-                            <li class="flex items-center gap-2">
-                                <span class="h-2 w-2 bg-emerald-400 rounded-full"></span>
-                                Track monthly payments, balances, and active memberships.
+                            <li class="flex items-start gap-3">
+                                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0 shadow-sm"></span>
+                                <span class="text-sm leading-relaxed"><strong class="text-slate-900">Track</strong> monthly payments, balances, and active memberships.</span>
                             </li>
                         </ul>
                         <a href="{{ route('application.create') }}"
-                           class="mt-6 w-full inline-flex justify-center px-4 py-2.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-sm font-medium">
+                           class="w-full inline-flex justify-center items-center px-5 py-3.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                            Start Player Registration
+                           <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                           </svg>
                         </a>
                     </div>
                 </div>
@@ -126,36 +138,36 @@
         </div>
     </section>
 
-    {{-- FEATURES (same layout, basketball content) --}}
-    <section class="py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl border border-slate-100 p-6 shadow-soft">
-                    <div class="flex items-center gap-2 text-slate-900 font-semibold">
-                        <span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span>
-                        Online Player Registration
+    {{-- FEATURES --}}
+    <section class="py-16 lg:py-24 bg-white/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div class="bg-white rounded-2xl border border-slate-200/60 p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="h-3 w-3 rounded-full bg-yellow-400 shadow-sm group-hover:scale-110 transition-transform"></span>
+                        <h3 class="text-slate-900 font-bold text-lg">Online Player Registration</h3>
                     </div>
-                    <p class="mt-2 text-slate-600 text-sm">
+                    <p class="text-slate-600 text-sm leading-relaxed">
                         Register new players for the academy, select age category and venue,
                         and keep all player details in one secure profile.
                     </p>
                 </div>
-                <div class="bg-white rounded-xl border border-slate-100 p-6 shadow-soft">
-                    <div class="flex items-center gap-2 text-slate-900 font-semibold">
-                        <span class="h-2.5 w-2.5 rounded-full bg-sky-400"></span>
-                        Membership Payments
+                <div class="bg-white rounded-2xl border border-slate-200/60 p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="h-3 w-3 rounded-full bg-sky-400 shadow-sm group-hover:scale-110 transition-transform"></span>
+                        <h3 class="text-slate-900 font-bold text-lg">Membership Payments</h3>
                     </div>
-                    <p class="mt-2 text-slate-600 text-sm">
+                    <p class="text-slate-600 text-sm leading-relaxed">
                         Record monthly fees, see payment status, and monitor outstanding balances
                         for each player and program.
                     </p>
                 </div>
-                <div class="bg-white rounded-xl border border-slate-100 p-6 shadow-soft">
-                    <div class="flex items-center gap-2 text-slate-900 font-semibold">
-                        <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-                        Teams & Categories
+                <div class="bg-white rounded-2xl border border-slate-200/60 p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 group sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="h-3 w-3 rounded-full bg-emerald-400 shadow-sm group-hover:scale-110 transition-transform"></span>
+                        <h3 class="text-slate-900 font-bold text-lg">Teams & Categories</h3>
                     </div>
-                    <p class="mt-2 text-slate-600 text-sm">
+                    <p class="text-slate-600 text-sm leading-relaxed">
                         View which team and category each player belongs to, and keep track of
                         active programs like practices, games, and clinics.
                     </p>
@@ -165,11 +177,11 @@
     </section>
 
     {{-- Footer --}}
-    <footer class="bg-white border-t">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-sm text-slate-600 flex items-center justify-between">
-            <span>© {{ date('Y') }} Shoot For The Stars Basketball Academy</span>
-            <span class="flex items-center gap-2">
-                <span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+    <footer class="bg-slate-950 text-slate-300 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span class="text-slate-400">© {{ date('Y') }} Shoot For The Stars Basketball Academy</span>
+            <span class="flex items-center gap-2 text-slate-400">
+                <span class="h-2 w-2 rounded-full bg-yellow-400 shadow-sm"></span>
                 <span>Youth basketball membership &amp; player management portal</span>
             </span>
         </div>
