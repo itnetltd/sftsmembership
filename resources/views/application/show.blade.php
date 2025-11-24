@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout> 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {{-- flash + errors --}}
@@ -21,8 +21,8 @@
 
         {{-- page title --}}
         <div class="mb-6">
-            <h1 class="text-2xl font-semibold">My Application</h1>
-            <p class="text-slate-600 text-sm">Track status and manage your company documents.</p>
+            <h1 class="text-2xl font-semibold">My Player Application</h1>
+            <p class="text-slate-600 text-sm">Track application status and manage your player details & documents.</p>
         </div>
 
         <div class="grid lg:grid-cols-12 gap-6">
@@ -31,7 +31,7 @@
                 <div class="bg-white rounded-xl border border-slate-200 shadow-soft">
                     <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('brand/ram-logo.png') }}" class="h-8 w-auto" alt="RAM">
+                            <img src="{{ asset('images/sfts-logo.png') }}" class="h-8 w-8 rounded-full bg-slate-900 p-0.5" alt="Shoot For The Stars">
                             <div class="font-medium">Application Summary</div>
                         </div>
                         @php
@@ -48,22 +48,22 @@
 
                     <div class="px-5 py-5 grid sm:grid-cols-2 gap-4 text-sm">
                         <div>
-                            <div class="text-slate-500">Company</div>
+                            <div class="text-slate-500">Player Name</div>
                             <div class="font-medium">{{ $app->company_name }}</div>
                         </div>
                         <div>
-                            <div class="text-slate-500">Sector</div>
+                            <div class="text-slate-500">Age Category</div>
                             <div class="font-medium">{{ $app->sector ?? '—' }}</div>
                         </div>
                         <div>
-                            <div class="text-slate-500">Location</div>
+                            <div class="text-slate-500">Training Venue</div>
                             <div class="font-medium">{{ $app->location ?? '—' }}</div>
                         </div>
                         <div>
-                            <div class="text-slate-500">Website</div>
+                            <div class="text-slate-500">Parent / Guardian Email</div>
                             <div class="font-medium">
                                 @if($app->company_website)
-                                    <a href="{{ $app->company_website }}" target="_blank" rel="noopener" class="text-ram-blue underline break-all">
+                                    <a href="mailto:{{ $app->company_website }}" class="text-indigo-600 underline break-all">
                                         {{ $app->company_website }}
                                     </a>
                                 @else
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <div class="sm:col-span-2">
-                            <div class="text-slate-500">Products / Services</div>
+                            <div class="text-slate-500">Player Summary</div>
                             <div class="font-medium whitespace-pre-line">{{ $app->products_services ?? '—' }}</div>
                         </div>
                         <div>
@@ -82,48 +82,48 @@
                     </div>
                 </div>
 
-                {{-- PSF MEMBERSHIP DETAILS --}}
+                {{-- MEMBERSHIP / PROGRAM DETAILS --}}
                 <div class="bg-white rounded-xl border border-slate-200 shadow-soft">
                     <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-                        <div class="font-medium">PSF Membership Details</div>
+                        <div class="font-medium">Membership & Program Details</div>
                     </div>
 
                     <div class="px-5 py-5 text-sm">
                         <dl class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <dt class="text-slate-500">Membership Type</dt>
+                                <dt class="text-slate-500">Program Type</dt>
                                 <dd class="font-medium">{{ $app->membership_type ?? '—' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-slate-500">Chamber</dt>
+                                <dt class="text-slate-500">Team / Division</dt>
                                 <dd class="font-medium">{{ $app->chamber ?? '—' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-slate-500">Association</dt>
+                                <dt class="text-slate-500">School</dt>
                                 <dd class="font-medium">{{ $app->association ?? '—' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-slate-500">Cluster</dt>
+                                <dt class="text-slate-500">Jersey Name / Number</dt>
                                 <dd class="font-medium">{{ $app->cluster_name ?? '—' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-slate-500">Registration Type</dt>
+                                <dt class="text-slate-500">Player Document Type</dt>
                                 <dd class="font-medium">{{ $app->registration_type ?? '—' }}</dd>
                             </div>
                             <div>
-                                <dt class="text-slate-500">Registration Number</dt>
+                                <dt class="text-slate-500">Document Number</dt>
                                 <dd class="font-medium">{{ $app->registration_number ?? '—' }}</dd>
                             </div>
                         </dl>
 
-                        <h4 class="font-semibold mt-6 mb-2">Company Address & Contacts</h4>
+                        <h4 class="font-semibold mt-6 mb-2">Address & Contacts</h4>
                         <dl class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            <div><dt class="text-slate-500">Phone</dt><dd class="font-medium">{{ $app->phone ?? '—' }}</dd></div>
-                            <div><dt class="text-slate-500">Fax</dt><dd class="font-medium">{{ $app->fax ?? '—' }}</dd></div>
-                            <div><dt class="text-slate-500">P.O. Box</dt><dd class="font-medium">{{ $app->po_box ?? '—' }}</dd></div>
+                            <div><dt class="text-slate-500">Parent Phone</dt><dd class="font-medium">{{ $app->phone ?? '—' }}</dd></div>
+                            <div><dt class="text-slate-500">Emergency Phone</dt><dd class="font-medium">{{ $app->fax ?? '—' }}</dd></div>
+                            <div><dt class="text-slate-500">P.O. Box / Address</dt><dd class="font-medium">{{ $app->po_box ?? '—' }}</dd></div>
                             <div><dt class="text-slate-500">Street</dt><dd class="font-medium">{{ $app->street ?? '—' }}</dd></div>
                             <div><dt class="text-slate-500">Building</dt><dd class="font-medium">{{ $app->building ?? '—' }}</dd></div>
-                            <div><dt class="text-slate-500">Quartier</dt><dd class="font-medium">{{ $app->quartier ?? '—' }}</dd></div>
+                            <div><dt class="text-slate-500">Neighbourhood</dt><dd class="font-medium">{{ $app->quartier ?? '—' }}</dd></div>
                             <div><dt class="text-slate-500">Province</dt><dd class="font-medium">{{ $app->province ?? '—' }}</dd></div>
                             <div><dt class="text-slate-500">District</dt><dd class="font-medium">{{ $app->district ?? '—' }}</dd></div>
                             <div><dt class="text-slate-500">Sector</dt><dd class="font-medium">{{ $app->sector_admin ?? '—' }}</dd></div>
@@ -131,7 +131,7 @@
                         </dl>
 
                         @if($app->relationLoaded('contacts') ? $app->contacts->isNotEmpty() : $app->contacts()->exists())
-                            <h4 class="font-semibold mt-6 mb-2">Key Contacts</h4>
+                            <h4 class="font-semibold mt-6 mb-2">Parent / Emergency Contacts</h4>
                             <ul class="list-disc ml-6 space-y-1">
                                 @foreach($app->contacts as $c)
                                     <li>
@@ -150,7 +150,7 @@
                 {{-- DOCUMENTS LIST --}}
                 <div class="bg-white rounded-xl border border-slate-200 shadow-soft">
                     <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-                        <div class="font-medium">My Documents</div>
+                        <div class="font-medium">Player Documents</div>
                         @if($app->status !== 'pending')
                             <span class="text-xs text-slate-500">Uploads locked ({{ $app->status }})</span>
                         @endif
@@ -180,8 +180,8 @@
 
                                         <div class="flex items-center gap-3 shrink-0">
                                             @if($url)
-                                                <a href="{{ $url }}" target="_blank" class="text-ram-blue underline text-sm">View</a>
-                                                <a href="{{ $url }}" download class="text-ram-blue underline text-sm">Download</a>
+                                                <a href="{{ $url }}" target="_blank" class="text-indigo-600 underline text-sm">View</a>
+                                                <a href="{{ $url }}" download class="text-indigo-600 underline text-sm">Download</a>
                                             @else
                                                 <span class="text-xs text-red-600">Missing file</span>
                                             @endif
@@ -217,18 +217,21 @@
                             @csrf
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Document Type</label>
-                                <select name="type" required class="border-slate-300 rounded-md w-full focus:border-ram-blue focus:ring-ram-blue">
-                                    <option value="RDB_certificate">RDB Certificate</option>
-                                    <option value="TIN">TIN</option>
-                                    <option value="ID_copy">ID Copy</option>
+                                <select name="type" required
+                                        class="border-slate-300 rounded-md w-full focus:border-indigo-600 focus:ring-indigo-600 text-sm">
+                                    <option value="Birth Certificate">Birth Certificate</option>
+                                    <option value="Player ID / Passport">Player ID / Passport</option>
+                                    <option value="Insurance / Medical">Insurance / Medical</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">File</label>
-                                <input type="file" name="file" required class="block w-full text-sm border-slate-300 rounded-md focus:border-ram-blue focus:ring-ram-blue">
+                                <input type="file" name="file" required
+                                       class="block w-full text-sm border-slate-300 rounded-md focus:border-indigo-600 focus:ring-indigo-600">
                             </div>
-                            <button type="submit" class="w-full inline-flex justify-center px-4 py-2.5 rounded-lg bg-ram-blue text-white hover:opacity-90">
+                            <button type="submit"
+                                    class="w-full inline-flex justify-center px-4 py-2.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800">
                                 Upload
                             </button>
                         </form>

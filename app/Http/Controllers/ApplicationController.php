@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class ApplicationController extends Controller
 {
     /**
-     * Show the RAM membership application form.
+     * Show the SFTS membership application form.
      * Redirects if the user already has a pending or approved application.
      */
     public function create()
@@ -28,51 +28,30 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Store a new membership application (RAM + PSF fields).
+     * Store a new membership application (Shoot For The Stars).
      */
     public function store(Request $r)
     {
         $validated = $r->validate([
-            // existing:
-            'company_name'        => 'required|string|max:255',
-            'sector'              => 'nullable|string|max:255',
-            'location'            => 'nullable|string|max:255',
-            'company_website'     => 'nullable|url|max:255',
-            'products_services'   => 'nullable|string',
+            // Core fields (renamed meaning but same columns)
+            'company_name'      => 'required|string|max:255',  // Player full name
+            'sector'            => 'nullable|string|max:255',  // Age category (U12, U10…)
+            'location'          => 'nullable|string|max:255',  // Training venue
 
-            // PSF: membership
-            'membership_type'     => 'nullable|in:Champions,Ordinary,Golden Circle',
-            'chamber'             => 'nullable|string|max:255',
-            'association'         => 'nullable|string|max:255',
-            'cluster_name'        => 'nullable|string|max:255',
+            // Parent contact
+            'company_website'   => 'nullable|email|max:255',   // Parent / guardian email
+            'phone'             => 'nullable|string|max:50',   // Parent / guardian phone
 
-            // PSF: registration
-            'registration_type'   => 'nullable|in:TIN,Company code,Patent,RCA Number',
-            'registration_number' => 'nullable|string|max:255',
+            // Program / membership
+            'membership_type'   => 'nullable|in:Practice Only,Full Program + Game Day,Shooting Clinics',
+            'chamber'           => 'nullable|string|max:255',  // Team / division
+            'association'       => 'nullable|string|max:255',  // School
+            'cluster_name'      => 'nullable|string|max:255',  // Jersey name / number
 
-            // PSF: address/contact
-            'phone'        => 'nullable|string|max:50',
-            'fax'          => 'nullable|string|max:50',
-            'po_box'       => 'nullable|string|max:100',
-            'street'       => 'nullable|string|max:255',
-            'building'     => 'nullable|string|max:255',
-            'quartier'     => 'nullable|string|max:255',
-            'province'     => 'nullable|string|max:100',
-            'district'     => 'nullable|string|max:100',
-            'sector_admin' => 'nullable|string|max:100',
-            'cell'         => 'nullable|string|max:100',
+            // Player notes
+            'products_services' => 'nullable|string',
 
-            // PSF: profile
-            'company_type'               => 'nullable|string|max:100',
-            'ownership'                  => 'nullable|string|max:100',
-            'business_activity'          => 'nullable|string|max:255',
-            'business_activity_detail'   => 'nullable|string',
-            'export_import'              => 'nullable|string',
-            'export_import_countries'    => 'nullable|string',
-            'employees_perm'             => 'nullable|string|max:30',
-            'employees_part'             => 'nullable|string|max:30',
-
-            // Contacts array
+            // Contacts array (kept for future use, safe even if form doesn’t send it)
             'contacts'                 => 'array',
             'contacts.*.role'          => 'nullable|string|max:100',
             'contacts.*.first_name'    => 'nullable|string|max:100',
@@ -82,10 +61,8 @@ class ApplicationController extends Controller
             'contacts.*.email'         => 'nullable|email|max:255',
         ]);
 
-        // Normalize website if present
-        if (!empty($validated['company_website'])) {
-            $validated['company_website'] = $this->normalizeWebsite($validated['company_website']);
-        }
+        // NOTE: previously we normalized company_website as a URL.
+        // Now this field is used as parent email, so no normalization is needed.
 
         $app = DB::transaction(function () use ($validated) {
             $app = MembershipApplication::create([
@@ -93,47 +70,24 @@ class ApplicationController extends Controller
                 'status'       => 'pending',
                 'submitted_at' => now(),
 
-                // existing:
-                'company_name'        => $validated['company_name'],
-                'sector'              => $validated['sector'] ?? null,
-                'location'            => $validated['location'] ?? null,
-                'company_website'     => $validated['company_website'] ?? null,
-                'products_services'   => $validated['products_services'] ?? null,
+                // Core fields
+                'company_name'      => $validated['company_name'],
+                'sector'            => $validated['sector'] ?? null,
+                'location'          => $validated['location'] ?? null,
+                'company_website'   => $validated['company_website'] ?? null,
+                'phone'             => $validated['phone'] ?? null,
+                'products_services' => $validated['products_services'] ?? null,
 
-                // PSF:
-                'membership_type'     => $validated['membership_type'] ?? null,
-                'chamber'             => $validated['chamber'] ?? null,
-                'association'         => $validated['association'] ?? null,
-                'cluster_name'        => $validated['cluster_name'] ?? null,
-
-                'registration_type'   => $validated['registration_type'] ?? null,
-                'registration_number' => $validated['registration_number'] ?? null,
-
-                'phone'        => $validated['phone'] ?? null,
-                'fax'          => $validated['fax'] ?? null,
-                'po_box'       => $validated['po_box'] ?? null,
-                'street'       => $validated['street'] ?? null,
-                'building'     => $validated['building'] ?? null,
-                'quartier'     => $validated['quartier'] ?? null,
-                'province'     => $validated['province'] ?? null,
-                'district'     => $validated['district'] ?? null,
-                'sector_admin' => $validated['sector_admin'] ?? null,
-                'cell'         => $validated['cell'] ?? null,
-
-                'company_type'               => $validated['company_type'] ?? null,
-                'ownership'                  => $validated['ownership'] ?? null,
-                'business_activity'          => $validated['business_activity'] ?? null,
-                'business_activity_detail'   => $validated['business_activity_detail'] ?? null,
-                'export_import'              => $validated['export_import'] ?? null,
-                'export_import_countries'    => $validated['export_import_countries'] ?? null,
-                'employees_perm'             => $validated['employees_perm'] ?? null,
-                'employees_part'             => $validated['employees_part'] ?? null,
+                // Program / membership
+                'membership_type'   => $validated['membership_type'] ?? null,
+                'chamber'           => $validated['chamber'] ?? null,
+                'association'       => $validated['association'] ?? null,
+                'cluster_name'      => $validated['cluster_name'] ?? null,
             ]);
 
-            // Contacts (optional)
+            // Contacts (optional – only created if some data is provided)
             if (!empty($validated['contacts'])) {
                 foreach ($validated['contacts'] as $c) {
-                    // avoid empty rows (all-null fields)
                     if (is_array($c) && array_filter($c, fn($v) => $v !== null && $v !== '')) {
                         $app->contacts()->create($c);
                     }
@@ -160,7 +114,7 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Normalize the website field to include https:// if missing.
+     * Old helper kept for compatibility. Not used now because company_website stores email.
      */
     private function normalizeWebsite(?string $url): ?string
     {

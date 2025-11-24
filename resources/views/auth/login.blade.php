@@ -4,10 +4,13 @@
 
     <div class="bg-white border border-slate-100 rounded-xl shadow-soft p-6">
         <div class="flex items-center gap-3 mb-4">
-            <img src="{{ asset('brand/ram-logo.png') }}" alt="RAM" class="h-10 w-auto">
+            {{-- Updated SFTS logo --}}
+            <img src="{{ asset('images/sfts-logo.png') }}" alt="Shoot for the Stars" class="h-10 w-auto">
             <div>
                 <div class="font-semibold">Welcome back</div>
-                <div class="text-sm text-slate-600">Log in to your RAM account</div>
+                <div class="text-sm text-slate-600">
+                    Log in to your Shoot for the Stars membership account
+                </div>
             </div>
         </div>
 
@@ -25,7 +28,7 @@
                     required
                     autofocus
                     autocomplete="username"
-                    class="block mt-1 w-full border-slate-300 focus:border-ram-blue focus:ring-ram-blue"
+                    class="block mt-1 w-full border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
                 />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
@@ -39,7 +42,7 @@
                     name="password"
                     required
                     autocomplete="current-password"
-                    class="block mt-1 w-full border-slate-300 focus:border-ram-blue focus:ring-ram-blue"
+                    class="block mt-1 w-full border-slate-300 focus:border-indigo-600 focus:ring-indigo-600"
                 />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
@@ -50,13 +53,13 @@
                     <input id="remember_me"
                            type="checkbox"
                            name="remember"
-                           class="rounded border-slate-300 text-ram-blue focus:ring-ram-blue">
+                           class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-600">
                     <span class="text-sm text-slate-700">{{ __('Remember me') }}</span>
                 </label>
 
                 @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}"
-                       class="text-sm text-ram-blue hover:underline">
+                       class="text-sm text-indigo-600 hover:underline">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -65,7 +68,7 @@
             {{-- Submit --}}
             <div class="pt-2">
                 <x-primary-button
-                    class="ms-0 w-full justify-center bg-ram-blue hover:opacity-90 focus:ring-ram-blue">
+                    class="ms-0 w-full justify-center bg-indigo-600 hover:opacity-90 focus:ring-indigo-600">
                     {{ __('Log in') }}
                 </x-primary-button>
             </div>
@@ -79,7 +82,9 @@
         </div>
         <div class="mt-4 text-center text-sm">
             {{ __("Don’t have an account?") }}
-            <a href="{{ route('register') }}" class="text-ram-blue hover:underline">Create one</a>
+            <a href="{{ route('register') }}" class="text-indigo-600 hover:underline">
+                Create one
+            </a>
         </div>
     </div>
 </x-guest-layout>
